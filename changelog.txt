@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.4.2
+Date: 2024-10-28
+  Changes:
+    - Updated to Factorio 2.0
+    - Removed signals!!
+    - Entity collision changed, placing new rails not always possible!
+---------------------------------------------------------------------------------------------------
 Version: 0.4.1
 Date: 2024-09-22
   Features:
