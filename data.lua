@@ -1,4 +1,4 @@
-local graphics_path = "__fake-new-rails-2.0__/graphics/entity/"
+local graphics_path = "__fake-new-rails-2__/graphics/entity/"
 local sprite_layer_names = { "stone", "sleepers", "metals", "signals", "collisions" }
 local sprite_layer_indices = { stone = 1, sleepers = 2, metals = 3, signals = 4, collisions = 5 }
 
