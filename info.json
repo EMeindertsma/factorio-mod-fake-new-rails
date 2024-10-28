@@ -1,12 +1,11 @@
 {
-  "name": "fake-new-rails",
-  "version": "0.4.1",
-  "title": "Fake New Rails",
-  "author": "Sparr",
-  "homepage": "http://github.com/sparr/factorio-mod-fake-new-rails",
-  "contact": "sparr0@gmail.com",
+  "name": "fake-new-rails-2.0",
+  "version": "0.4.2",
+  "title": "Fake New Rails 2.0",
+  "author": "EMeindertsma",
+  "homepage": "http://github.com/EMeindertsma/factorio-mod-fake-new-rails",
   "description": "Adds simple non-rail entities shaped like the new Space Age / Factorio 2.0 rails.",
-  "factorio_version": "1.1",
+  "factorio_version": "2.0",
   "package": {
     "ignore": [
       "graphics/screenshots/*",
