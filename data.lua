@@ -1,3 +1,4 @@
+local graphics_path = "__fake-new-rails-2.0__/graphics/entity/"
 local sprite_layer_names = { "stone", "sleepers", "metals", "signals", "collisions" }
 local sprite_layer_indices = { stone = 1, sleepers = 2, metals = 3, signals = 4, collisions = 5 }
 
@@ -25,7 +26,7 @@ local function get_recipe_and_item_prototypes(name, icon)
         type = "recipe",
         name = name,
         enabled = true,
-        result = name,
+        results = {{type="item", name=name, amount=1}},
         ingredients = {},
       },
       {
@@ -56,7 +57,7 @@ local function get_entity_prototype(name, icon, selection_size, collision_size)
   entity.name = name
   entity.icon = icon
   entity.max_health = 1000
-  entity.collision_mask = {}
+  --entity.collision_mask = {} -- removed collision
   entity.build_grid_size = 2
   entity.collision_box = {{-collision_size[1]/2, -collision_size[2]/2}, {collision_size[1]/2, collision_size[2]/2}}
   entity.selection_box = {{-selection_size[1]/2, -selection_size[2]/2}, {selection_size[1]/2, selection_size[2]/2}}
@@ -139,18 +140,18 @@ for elevation_id, elevation_name in pairs({"lo", "hi"}) do
 
   -- straight north/south and east/west rails
   name = "fake-rail-" .. elevation_name .. "-orthogonal"
-  icon = "__fake-new-rails__/graphics/entity/stone-orthogonal-1.png"
+  icon = graphics_path .. "stone-orthogonal-1.png"
   data:extend(get_recipe_and_item_prototypes(name, icon))
   entity = get_entity_prototype(name, icon, {2.57, 1.8}, {1.98, 1.4})
   entity.picture = {
     north = { layers = get_sprite_layers( {
-      filename = "__fake-new-rails__/graphics/entity/orthogonal-1.png",
+      filename = graphics_path .. "orthogonal-1.png",
       width = 80,
       height = 112,
       shift = {0, 0},
     } ) },
     east = { layers = get_sprite_layers( {
-      filename = "__fake-new-rails__/graphics/entity/orthogonal-2.png",
+      filename = graphics_path .. "orthogonal-2.png",
       width = 112,
       height = 80,
       shift = {0, 0},
@@ -165,7 +166,7 @@ for elevation_id, elevation_name in pairs({"lo", "hi"}) do
 
   -- straight 45-degree diagonal rails
   name = "fake-rail-" .. elevation_name .. "-diagonal"
-  icon = "__fake-new-rails__/graphics/entity/stone-diagonal-1.png"
+  icon = graphics_path .. "stone-diagonal-1.png"
   data:extend(get_recipe_and_item_prototypes(name, icon))
   entity = get_entity_prototype(name, icon, {2,2})
   entity.build_grid_size = 2
@@ -174,13 +175,13 @@ for elevation_id, elevation_name in pairs({"lo", "hi"}) do
   -- local offset = 11/32
   entity.picture = {
     north = { layers = get_sprite_layers( {
-      filename = "__fake-new-rails__/graphics/entity/diagonal-1.png",
+      filename = graphics_path .. "diagonal-1.png",
       width = 112,
       height = 112,
       -- shift = {offset, -offset},
     } ) },
     east = { layers = get_sprite_layers( {
-      filename = "__fake-new-rails__/graphics/entity/diagonal-2.png",
+      filename = graphics_path .. "diagonal-2.png",
       width = 112,
       height = 112,
       -- shift = {offset, offset},
@@ -196,17 +197,17 @@ for elevation_id, elevation_name in pairs({"lo", "hi"}) do
   -- straight ~26-degree half-diagonal rails
   for flip=1,2 do
     name = "fake-rail-" .. elevation_name .. "-half-diagonal-" .. flip
-    icon = "__fake-new-rails__/graphics/entity/stone-half-diagonal-" .. (flip*2-1) .. ".png"
+    icon = graphics_path .. "stone-half-diagonal-" .. (flip*2-1) .. ".png"
     data:extend(get_recipe_and_item_prototypes(name, icon))
     entity = get_entity_prototype(name, icon, {2,2})
     entity.picture = {
       north = { layers = get_sprite_layers( {
-        filename = "__fake-new-rails__/graphics/entity/half-diagonal-" .. (flip*2-1) .. ".png",
+        filename = graphics_path .. "half-diagonal-" .. (flip*2-1) .. ".png",
         width = 160,
         height = 112,
       } ) },
       east = { layers = get_sprite_layers( {
-          filename = "__fake-new-rails__/graphics/entity/half-diagonal-" .. (flip*2) .. ".png",
+          filename = graphics_path .. "half-diagonal-" .. (flip*2) .. ".png",
         width = 112,
         height = 160,
       } ) },
@@ -224,30 +225,30 @@ for elevation_id, elevation_name in pairs({"lo", "hi"}) do
     for flip=1,2 do
       -- look at bottom of ramp-east for fuckup that cascaded into these and maybe also orthogonal
       name = "fake-rail-" .. elevation_name .. "-" .. curve_type .. "-to-half-diagonal-" .. flip
-      icon = "__fake-new-rails__/graphics/entity/stone-" .. curve_type .. "-to-half-diagonal-" .. ((flip-1)*4+1) .. ".png"
+      icon = graphics_path .. "stone-" .. curve_type .. "-to-half-diagonal-" .. ((flip-1)*4+1) .. ".png"
       data:extend(get_recipe_and_item_prototypes(name, icon))
       entity = get_entity_prototype(name, icon, {curve_type == "orthogonal" and 4 or 2,2})
       entity.picture = {
         north = { layers = get_sprite_layers( {
-          filename = "__fake-new-rails__/graphics/entity/" .. curve_type .. "-to-half-diagonal-" .. ((flip-1)*4+1) .. ".png",
+          filename = graphics_path .. curve_type .. "-to-half-diagonal-" .. ((flip-1)*4+1) .. ".png",
           width = curve_type == "diagonal" and 168 or 182,
           height = curve_type == "diagonal" and 144 or 112,
           shift = curve_type == "diagonal" and {flip == 1 and -1/8 or 1/8, -1/2} or {flip == 1 and -19/32 or 19/32, 0},
         } ) },
         east = { layers = get_sprite_layers( {
-          filename = "__fake-new-rails__/graphics/entity/" .. curve_type .. "-to-half-diagonal-" .. ((flip-1)*4+2) .. ".png",
+          filename = graphics_path  .. curve_type .. "-to-half-diagonal-" .. ((flip-1)*4+2) .. ".png",
           width = curve_type == "diagonal" and 144 or 112,
           height = curve_type == "diagonal" and 168 or 182,
           shift = curve_type == "diagonal" and {1/2, flip == 1 and -1/8 or 1/8} or {0, flip == 1 and -19/32 or 19/32},
         } ) },
         south = { layers = get_sprite_layers( {
-          filename = "__fake-new-rails__/graphics/entity/" .. curve_type .. "-to-half-diagonal-" .. ((flip-1)*4+3) .. ".png",
+          filename = graphics_path .. curve_type .. "-to-half-diagonal-" .. ((flip-1)*4+3) .. ".png",
           width = curve_type == "diagonal" and 168 or 182,
           height = curve_type == "diagonal" and 144 or 112,
           shift = curve_type == "diagonal" and {flip == 1 and 1/8 or -1/8, 1/2} or {flip == 1 and 19/32 or -19/32, 0},
         } ) },
         west = { layers = get_sprite_layers( {
-            filename = "__fake-new-rails__/graphics/entity/" .. curve_type .. "-to-half-diagonal-" .. ((flip-1)*4+4) .. ".png",
+            filename = graphics_path .. curve_type .. "-to-half-diagonal-" .. ((flip-1)*4+4) .. ".png",
           width = curve_type == "diagonal" and 144 or 112,
           height = curve_type == "diagonal" and 168 or 182,
           shift = curve_type == "diagonal" and {-1/2, flip == 1 and 1/8 or -1/8} or {0, flip == 1 and 19/32 or -19/32},
@@ -264,31 +265,31 @@ end
 
 -- ramps
 name = "fake-rail-ramp"
-icon = "__fake-new-rails__/graphics/entity/ramp-east.png"
+icon = graphics_path .. "ramp-east.png"
 data:extend(get_recipe_and_item_prototypes(name, icon))
 entity = get_entity_prototype(name, icon, {4,16}, {3.6, 15.6})
 entity.tile_width = 2
 entity.picture = {
   north = {
-    filename = "__fake-new-rails__/graphics/entity/ramp-north.png",
+    filename = graphics_path .. "ramp-north.png",
     width = 128,
     height = 640,
     shift = {0, -2.0},
   },
   east = {
-    filename = "__fake-new-rails__/graphics/entity/ramp-east.png",
+    filename = graphics_path .. "ramp-east.png",
     width = 512,
     height = 208,
     shift = {0, -1.25},
   },
   south = {
-    filename = "__fake-new-rails__/graphics/entity/ramp-south.png",
+    filename = graphics_path .. "ramp-south.png",
     width = 128,
     height = 544,
     shift = {0, -0.5},
   },
   west = {
-    filename = "__fake-new-rails__/graphics/entity/ramp-west.png",
+    filename = graphics_path .. "ramp-west.png",
     width = 512,
     height = 208,
     shift = {0, -1.25},
@@ -298,14 +299,14 @@ data:extend({entity})
 
 -- support
 name = "fake-rail-support"
-icon = "__fake-new-rails__/graphics/entity/support.png"
+icon = graphics_path .. "support.png"
 data:extend(get_recipe_and_item_prototypes(name, icon))
 entity = get_entity_prototype(name, icon, {3,3}, {2.8, 2.8})
 entity.tile_height = 4
 entity.tile_width = 4
 entity.build_grid_size = 1
 entity.picture = {
-  filename = "__fake-new-rails__/graphics/entity/support.png",
+  filename = graphics_path .. "support.png",
   width = 128,
   height = 200,
   shift = {0, -1.125},
@@ -319,6 +320,7 @@ local signal_sprite_directions_info = {
   {"west", {x=0,y=-2}}
 }
 
+--[[
 -- signals
 -- elevated and non-elevated versions
 for elevation_id, elevation_name in pairs({"lo", "hi"}) do
@@ -347,3 +349,4 @@ for elevation_id, elevation_name in pairs({"lo", "hi"}) do
     data:extend({entity})
   end
 end
+]]
